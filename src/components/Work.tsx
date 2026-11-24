@@ -1,119 +1,173 @@
 import Image from "next/image";
 import { site, type Project } from "@/config/site";
-import Intertitle from "./Intertitle";
 import { BrowserFrame, PhoneFrame } from "./Frames";
-import Tilt from "./Tilt";
+import SectionHead from "./SectionHead";
+import ProjectIndex from "./ProjectIndex";
 
-function KindLabel({ project }: { project: Project }) {
-  const label = project.kind === "concept" ? "Concept · Self-initiated" : "Client project";
+function KindTag({ project }: { project: Project }) {
+  const client = project.kind === "client";
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-3 py-1 text-xs font-medium text-ink-soft">
-      <span
-        className={`h-1.5 w-1.5 rounded-full ${project.status === "live" ? "bg-accent" : "bg-ink/30"}`}
-        aria-hidden="true"
-      />
-      {label}
-      {project.status === "in-progress" && <span className="text-ink-soft/80">· In progress</span>}
+    <span
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[0.68rem] uppercase tracking-[0.08em] ${
+        client ? "border-bone/40 bg-bone/[0.06] text-bone" : "border-blue/40 bg-blue/[0.08] text-blue"
+      }`}
+    >
+      <span className={`h-1.5 w-1.5 rounded-full ${client ? "bg-bone" : "bg-blue"}`} aria-hidden="true" />
+      {client ? "Client project" : "Independent concept"} · Completed
     </span>
   );
 }
 
-function FeatureProject({ project }: { project: Project }) {
+function Feature({ project, index }: { project: Project; index: number }) {
   const img = project.images!;
   const url = project.url!;
+  const host = url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
+  const flip = index % 2 === 0; // alternate the composition so consecutive projects don't repeat
+  const visit = project.kind === "concept" ? "Visit live concept" : "Visit live site";
+  const overview = [
+    { label: "Client", value: project.kind === "client" ? project.subtitle ?? project.title : "Self-initiated" },
+    { label: "Sector", value: project.sector },
+    { label: "Services", value: project.scope.join(", ") },
+    {
+      label: "Status",
+      value:
+        project.kind === "concept"
+          ? `Completed. Independent concept, not commissioned by ${project.subtitle ?? project.title}.`
+          : "Completed. Live in production.",
+    },
+  ];
+
   return (
-    <article className="grid gap-10 lg:grid-cols-12 lg:gap-12" aria-labelledby={`p-${project.slug}`}>
-      {/* media column */}
-      <div className="relative lg:col-span-8">
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group block rounded-[12px]"
-          aria-label={`Open the ${project.title} live concept (opens in a new tab)`}
-        >
-          <Tilt>
-            <div data-reveal>
-              <BrowserFrame url={url} className="shadow-[0_30px_70px_-35px_rgba(14,38,28,0.5)]">
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={img.desktop}
-                    alt={img.alt}
-                    width={1600}
-                    height={956}
-                    sizes="(min-width: 1024px) 62vw, 92vw"
-                    className="block h-auto w-full transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.02]"
-                  />
-                  <span className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper opacity-0 transition-all duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 max-md:opacity-100">
-                    View live concept <span aria-hidden="true">↗</span>
-                  </span>
-                </div>
-              </BrowserFrame>
-            </div>
-          </Tilt>
+    <article id={`case-${project.slug}`} aria-labelledby={`p-${project.slug}`} className="scroll-mt-24">
+      {/* rail */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <span className="label !text-bone">{String(index).padStart(2, "0")}</span>
+          <KindTag project={project} />
+        </div>
+        <a href={url} {...ext} className="label link-u !text-bone">
+          {host} ↗<span className="sr-only"> (opens in a new tab)</span>
         </a>
-        {img.mobile && (
-          <div className="pointer-events-none absolute -bottom-10 right-3 hidden w-[19%] sm:block lg:right-[-2%]" aria-hidden="true">
-            <div data-parallax="-0.08">
-              <div data-reveal style={{ ["--d" as string]: "200ms" }}>
-                <PhoneFrame>
-                  <Image src={img.mobile} alt="" width={600} height={1208} sizes="12rem" className="block h-auto w-full" />
-                </PhoneFrame>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* text column */}
-      <div className="lg:col-span-4 lg:pt-2">
-        <div data-reveal>
-          <KindLabel project={project} />
-          <h3 id={`p-${project.slug}`} className="font-display track-tight mt-6 text-5xl font-semibold sm:text-6xl">
-            <a href={url} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors duration-150">
-              {project.title}
-            </a>
-          </h3>
-          <p className="mt-3 text-lg font-medium leading-snug">{project.summary}</p>
-          <p className="mt-5 leading-relaxed text-ink-soft">{project.description}</p>
+      {/* title crosses into the cover */}
+      <div className={`relative z-10 mt-6 flex flex-col gap-4 sm:mt-10 lg:flex-row lg:items-end ${flip ? "lg:flex-row-reverse" : ""}`}>
+        <h3
+          id={`p-${project.slug}`}
+          className="display shrink-0 text-[clamp(6rem,22vw,21rem)] leading-[0.85] lg:-mb-[0.3em] lg:leading-[0.8]"
+        >
+          <a href={url} {...ext} className="transition-colors duration-300 hover:text-blue">
+            {project.title}
+          </a>
+        </h3>
+        <div className={`max-w-[26rem] pb-8 lg:pb-[6vw] ${flip ? "lg:mr-auto" : "lg:ml-auto lg:text-right"}`}>
+          {project.subtitle && <p className="display text-3xl italic text-bone-2 sm:text-4xl">{project.subtitle}</p>}
+          <p className="mt-3 text-bone-2">{project.summary}</p>
+        </div>
+      </div>
 
-          <dl className="mt-8 grid grid-cols-[6rem_1fr] gap-y-3 border-t border-rule pt-6 text-sm">
-            <dt className="text-ink-soft">Sector</dt>
-            <dd>{project.sector}</dd>
-            <dt className="text-ink-soft">Scope</dt>
-            <dd>{project.scope.join(", ")}</dd>
-            <dt className="text-ink-soft">Status</dt>
-            <dd>{project.kind === "concept" ? "Self-initiated concept, not commissioned work" : "Commissioned client work"}</dd>
-          </dl>
+      {/* full-bleed cover */}
+      <div className="relative mx-[calc(50%-50vw)] border-y border-line">
+        <a href={url} {...ext} className="group relative block overflow-hidden bg-ink-2" aria-label={`${visit}: ${project.title} (opens in a new tab)`}>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background: `radial-gradient(90% 90% at ${flip ? "15%" : "85%"} 0%, rgba(58,96,255,0.22), transparent 60%), linear-gradient(180deg, #17191e, #0c0d10)`,
+            }}
+          />
+          <div aria-hidden="true" className="rules absolute inset-0 opacity-40" />
+          <div className="relative mx-auto grid max-w-[1560px] grid-cols-12 items-end gap-4 px-[var(--gutter)] pt-[clamp(5rem,9vw,9rem)] sm:gap-6">
+            <div data-curtain className={`col-span-12 sm:col-span-9 ${flip ? "sm:order-2" : ""}`}>
+              <div data-parallax="-0.03">
+                <BrowserFrame url={url} className="rounded-b-none border-b-0 shadow-[0_-30px_90px_-30px_rgba(58,96,255,0.4)]">
+                  <div className="overflow-hidden">
+                    <Image
+                      src={img.desktop}
+                      alt={img.alt}
+                      width={1600}
+                      height={956}
+                      sizes="(min-width: 1024px) 70vw, 92vw"
+                      className="block h-auto w-full transition-transform duration-[1200ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.025]"
+                    />
+                  </div>
+                </BrowserFrame>
+              </div>
+            </div>
+            {img.mobile && (
+              <div className={`col-span-3 hidden self-start sm:block ${flip ? "sm:order-1" : ""}`} data-reveal style={{ ["--d" as string]: "200ms" }}>
+                <div data-parallax="-0.1" className="pt-[45%]">
+                  <PhoneFrame>
+                    <Image src={img.mobile} alt="" width={600} height={1208} sizes="18vw" className="block h-auto w-full" />
+                  </PhoneFrame>
+                </div>
+              </div>
+            )}
+          </div>
+          <span
+            className={`absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-bone px-4 py-2 text-sm font-medium text-ink-0 transition-[opacity,transform] duration-300 sm:bottom-auto sm:top-6 sm:translate-y-1 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-visible:translate-y-0 sm:group-focus-visible:opacity-100 ${
+              flip ? "sm:left-[var(--gutter)] sm:right-auto" : "sm:right-[var(--gutter)]"
+            }`}
+          >
+            {visit} <span aria-hidden="true">↗</span>
+          </span>
+        </a>
+      </div>
 
-          <a href={url} target="_blank" rel="noopener noreferrer" className="btn btn-solid mt-9">
-            Visit live concept <span className="arrow" aria-hidden="true">↗</span>
+      {/* case overview */}
+      <dl className="grid grid-cols-2 border-b border-line lg:grid-cols-4">
+        {overview.map((o, i) => (
+          <div
+            key={o.label}
+            data-reveal
+            style={{ ["--d" as string]: `${i * 70}ms` }}
+            className={`py-6 pr-6 ${i % 2 ? "border-l border-line pl-5 lg:pl-6" : ""} ${i === 2 ? "border-t border-line lg:border-l lg:border-t-0 lg:pl-6" : ""} ${
+              i === 3 ? "border-t border-line lg:border-t-0" : ""
+            }`}
+          >
+            <dt className="label">{o.label}</dt>
+            <dd className="mt-3 text-sm leading-relaxed sm:text-base">{o.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div className="mt-12 grid gap-10 lg:grid-cols-12">
+        <p data-reveal className={`display text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.15] text-bone lg:col-span-7 ${flip ? "lg:col-start-6" : ""}`}>
+          {project.description}
+        </p>
+        <div data-reveal className={`lg:col-span-3 lg:self-end ${flip ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-10 lg:text-right"}`}>
+          <a href={url} {...ext} className="btn btn-primary">
+            {visit} <span className="arrow" aria-hidden="true">↗</span>
             <span className="sr-only">(opens in a new tab)</span>
           </a>
         </div>
       </div>
 
-      {/* detail strip */}
+      {/* details */}
       {img.details && img.details.length > 0 && (
-        <div className="grid gap-6 sm:grid-cols-12 lg:col-span-12 lg:mt-14">
+        <div className="mt-20 grid gap-8 sm:grid-cols-12">
           {img.details.slice(0, 2).map((d, i) => (
             <figure
               key={d.src}
-              data-reveal
-              style={{ ["--d" as string]: `${i * 120}ms` }}
-              className={i === 0 ? "sm:col-span-7 sm:col-start-2" : "sm:col-span-4 sm:mt-24"}
+              className={
+                i === 0 ? `sm:col-span-7 ${flip ? "sm:order-2" : ""}` : `sm:col-span-5 sm:mt-28 ${flip ? "sm:order-1" : ""}`
+              }
             >
-              <div className="overflow-hidden rounded-[10px] border border-ink/10">
+              <div data-curtain style={{ ["--d" as string]: `${i * 120}ms` }} className="overflow-hidden rounded-[12px] border border-line">
                 <Image
                   src={d.src}
                   alt={d.alt}
                   width={1600}
                   height={956}
-                  sizes={i === 0 ? "(min-width: 640px) 55vw, 92vw" : "(min-width: 640px) 32vw, 92vw"}
+                  sizes={i === 0 ? "(min-width: 640px) 56vw, 92vw" : "(min-width: 640px) 40vw, 92vw"}
                   className="block h-auto w-full"
                 />
               </div>
-              <figcaption className="mt-3 text-sm text-ink-soft">{d.caption}</figcaption>
+              <figcaption className="mt-4 flex gap-4 text-sm text-bone-3">
+                <span className="font-mono text-xs text-bone-2">{String(index).padStart(2, "0")}.{i + 1}</span>
+                {d.caption}
+              </figcaption>
             </figure>
           ))}
         </div>
@@ -122,99 +176,25 @@ function FeatureProject({ project }: { project: Project }) {
   );
 }
 
-function Blueprint({ variant }: { variant: "hotel" | "education" }) {
-  return (
-    <svg viewBox="0 0 400 250" className="h-auto w-full text-ink/25" aria-hidden="true">
-      <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="4 4">
-        <rect x="16" y="14" width="368" height="222" rx="6" />
-        <line x1="16" y1="38" x2="384" y2="38" />
-      </g>
-      <g fill="currentColor" opacity="0.7">
-        <rect x="30" y="22" width="40" height="8" rx="2" />
-        <rect x="290" y="22" width="80" height="8" rx="4" />
-      </g>
-      {variant === "hotel" ? (
-        <g fill="none" stroke="currentColor" strokeWidth="1.2">
-          <rect x="30" y="52" width="340" height="96" rx="4" strokeDasharray="4 4" />
-          <path d="M30 148 L120 92 L180 128 L250 76 L370 148" />
-          <circle cx="320" cy="78" r="10" />
-          <rect x="30" y="162" width="104" height="60" rx="4" />
-          <rect x="148" y="162" width="104" height="60" rx="4" />
-          <rect x="266" y="162" width="104" height="60" rx="4" />
-        </g>
-      ) : (
-        <g fill="none" stroke="currentColor" strokeWidth="1.2">
-          <rect x="30" y="56" width="150" height="14" rx="3" fill="currentColor" opacity="0.6" />
-          <rect x="30" y="78" width="120" height="14" rx="3" fill="currentColor" opacity="0.6" />
-          <rect x="30" y="104" width="160" height="6" rx="3" />
-          <rect x="30" y="116" width="140" height="6" rx="3" />
-          <rect x="30" y="136" width="70" height="18" rx="9" />
-          <rect x="214" y="52" width="156" height="104" rx="4" strokeDasharray="4 4" />
-          <rect x="30" y="170" width="160" height="52" rx="4" />
-          <rect x="210" y="170" width="160" height="52" rx="4" />
-        </g>
-      )}
-    </svg>
-  );
-}
-
-function UpcomingProject({ project, delay }: { project: Project; delay: number }) {
-  return (
-    <article
-      data-reveal
-      style={{ ["--d" as string]: `${delay}ms` }}
-      className="rounded-[12px] border border-dashed border-ink/20 p-6 sm:p-8"
-      aria-labelledby={`p-${project.slug}`}
-    >
-      <div className="rounded-[8px] bg-paper-2/70 p-4">
-        <Blueprint variant={project.slug === "hotel" ? "hotel" : "education"} />
-      </div>
-      <div className="mt-7 flex flex-wrap items-center justify-between gap-3">
-        <KindLabel project={project} />
-        <span className="text-xs text-ink-soft">{project.sector}</span>
-      </div>
-      <h3 id={`p-${project.slug}`} className="font-display track-tight mt-4 text-2xl font-semibold sm:text-3xl">
-        {project.title}
-      </h3>
-      <p className="mt-3 max-w-[44ch] leading-relaxed text-ink-soft">{project.description}</p>
-      <p className="mt-6 text-sm font-medium text-ink-soft" aria-label="Live demo not yet available">
-        Demo coming soon
-      </p>
-    </article>
-  );
-}
-
 export default function Work() {
-  const live = site.projects.filter((p) => p.status === "live" && p.url && p.images);
-  const upcoming = site.projects.filter((p) => !(p.status === "live" && p.url && p.images));
+  const isShown = (p: Project) => p.status === "completed" && p.url && p.images;
+  const live = site.projects.filter(isShown);
 
   return (
-    <section id="work" className="relative scroll-mt-6 bg-paper px-[var(--gutter)] pb-[var(--section)] pt-[clamp(3rem,8vw,7rem)]">
-      <div className="mx-auto max-w-[1400px]">
-        <Intertitle n={1} title="Selected work" />
+    <section id="work" className="relative scroll-mt-16 bg-ink-0 px-[var(--gutter)] pb-[var(--section)] pt-[clamp(4rem,8vw,7rem)]">
+      <div className="mx-auto max-w-[1560px]">
+        <SectionHead
+          title="Selected *Work*"
+          count={site.projects.length}
+          aside="Client work and independent concepts, each built around a real business: clear structure, local context, and pages that load fast."
+        />
 
-        <div className="mb-16 grid gap-6 lg:grid-cols-12">
-          <p data-reveal className="font-display track-tight text-3xl font-medium leading-[1.1] sm:text-4xl lg:col-span-8">
-            Self-initiated concepts that show how I think about real businesses here: clear structure, local
-            context, built to load fast.
-          </p>
-        </div>
+        <ProjectIndex projects={site.projects} />
 
-        <div className="space-y-28">
-          {live.map((p) => (
-            <FeatureProject key={p.slug} project={p} />
+        <div className="mt-[var(--section)] space-y-[var(--section)]">
+          {live.map((p, i) => (
+            <Feature key={p.slug} project={p} index={i + 1} />
           ))}
-
-          {upcoming.length > 0 && (
-            <div>
-              <h3 className="mb-8 text-sm font-medium uppercase tracking-[0.14em] text-ink-soft">Next on the desk</h3>
-              <div className="grid gap-6 md:grid-cols-2">
-                {upcoming.map((p, i) => (
-                  <UpcomingProject key={p.slug} project={p} delay={i * 80} />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </section>

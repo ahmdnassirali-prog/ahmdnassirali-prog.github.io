@@ -1,21 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
 import Motion from "@/components/Motion";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"], display: "swap" });
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: "400",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  // Origin only: Next adds the base path itself to file-based images like the share image.
+  metadataBase: new URL(new URL(site.url).origin),
   title: {
-    default: `${site.name} · Websites for Somaliland and the world`,
+    default: `${site.name} · Web design & development, Somaliland and worldwide`,
     template: `%s · ${site.name}`,
   },
   description: site.description,
@@ -27,10 +30,10 @@ export const metadata: Metadata = {
     "Next.js developer",
     "responsive website design",
   ],
-  alternates: { canonical: "/" },
+  alternates: { canonical: site.url },
   openGraph: {
     type: "website",
-    url: "/",
+    url: site.url,
     siteName: site.name,
     title: site.name,
     description: site.description,
@@ -41,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#efeee8",
+  themeColor: "#09090b",
   width: "device-width",
   initialScale: 1,
 };
@@ -59,7 +62,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geist.variable} ${bricolage.variable} antialiased`}
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrument.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -68,7 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-bone focus:px-4 focus:py-2 focus:text-ink-0"
         >
           Skip to content
         </a>

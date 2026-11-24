@@ -1,14 +1,15 @@
+import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Work from "@/components/Work";
 import Services from "@/components/Services";
 import About from "@/components/About";
 import Process from "@/components/Process";
 import Contact from "@/components/Contact";
-import Folio from "@/components/Folio";
 
 export default function Home() {
   return (
     <>
+      <Nav />
       <main id="main">
         <Hero />
         <Work />
@@ -17,7 +18,6 @@ export default function Home() {
         <Process />
         <Contact />
       </main>
-      <Folio />
     </>
   );
 }

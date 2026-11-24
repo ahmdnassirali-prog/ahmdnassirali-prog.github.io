@@ -65,16 +65,16 @@ export default function ContactForm() {
     <form onSubmit={onSubmit} noValidate className="space-y-7" aria-describedby="form-note">
       <div className="grid gap-7 sm:grid-cols-2">
         <label className="block">
-          <span className="text-sm text-bone-soft">Your name</span>
+          <span className="text-sm text-bone-2">Your name</span>
           <input name="name" type="text" autoComplete="name" required className="field" placeholder="Full name" />
         </label>
         <label className="block">
-          <span className="text-sm text-bone-soft">Email</span>
+          <span className="text-sm text-bone-2">Email</span>
           <input name="email" type="email" autoComplete="email" required className="field" placeholder="you@company.com" />
         </label>
       </div>
       <label className="block">
-        <span className="text-sm text-bone-soft">What do you need?</span>
+        <span className="text-sm text-bone-2">What do you need?</span>
         <select name="need" className="field" defaultValue="">
           <option value="">Choose one (optional)</option>
           {site.services.map((s) => (
@@ -86,7 +86,7 @@ export default function ContactForm() {
         </select>
       </label>
       <label className="block">
-        <span className="text-sm text-bone-soft">Tell me about your project</span>
+        <span className="text-sm text-bone-2">Tell me about your project</span>
         <textarea
           name="message"
           required
@@ -97,11 +97,11 @@ export default function ContactForm() {
       </label>
 
       <div className="flex flex-wrap items-center gap-x-6 gap-y-4 pt-2">
-        <button type="submit" className="btn btn-solid disabled:opacity-60" disabled={status.kind === "sending"}>
+        <button type="submit" className="btn btn-primary" disabled={status.kind === "sending"}>
           {status.kind === "sending" ? "Sending…" : "Send message"}
           <span className="arrow" aria-hidden="true">→</span>
         </button>
-        <p id="form-note" className="text-sm text-bone-soft">
+        <p id="form-note" className="text-sm text-bone-2">
           {endpoint ? "Your message is sent securely." : "Opens your email app with your message ready to send."}
         </p>
       </div>
@@ -109,7 +109,7 @@ export default function ContactForm() {
       <p
         role="status"
         aria-live="polite"
-        className={`min-h-[1.5rem] text-sm ${status.kind === "error" ? "text-[#f4a38c]" : "text-accent-light"}`}
+        className={`min-h-[1.5rem] text-sm ${status.kind === "error" ? "text-[#ff9b8a]" : "text-blue"}`}
       >
         {status.message}
       </p>

@@ -8,57 +8,59 @@
 
 export type Project = {
   slug: string;
+  /** Short title, set very large. */
   title: string;
+  /** Full name or longer title shown under the big title. */
+  subtitle?: string;
   /** One-line description of what the site is. */
   summary: string;
   /** Short paragraph shown on the project spread. */
   description: string;
-  /** "concept" = self-initiated, "client" = commissioned work. */
+  /** "concept" = independent / self-initiated, "client" = commissioned work. */
   kind: "concept" | "client";
-  /** "live" shows a clickable link. "in-progress" shows a placeholder, no link. */
-  status: "live" | "in-progress";
+  /** "completed" shows the full project with a link. "in-progress" shows a placeholder, no link. */
+  status: "completed" | "in-progress";
   /** Live demo URL. Leave null for in-progress projects. */
   url: string | null;
   sector: string;
-  year?: string;
   /** What you did on the project. */
   scope: string[];
-  /** Images in /public. Leave empty for in-progress projects. */
+  /** Images in /public (1600×956 desktop shots, 600×1208 phone shots). Leave out for in-progress projects. */
   images?: {
     desktop: string;
     mobile?: string;
     alt: string;
-    /** Extra screenshots shown under the project (two work best). */
+    /** Extra screenshots shown with the project (two work best). */
     details?: { src: string; alt: string; caption: string }[];
   };
 };
 
 export const site = {
   /** Temporary brand. Change this one value when you pick a business name. */
-  name: "Independent Web Designer & Developer",
-  /** Short form used in tight spaces (folio, browser tab). */
-  shortName: "Independent Web Studio",
+  name: "Digital Experience Designer",
+  /** Short form used in tight spaces (navigation, browser tab). */
+  shortName: "Digital Experience Designer",
   /** Optional: your own name. Shown in About when set. */
   ownerName: "",
   /** Where you are based. */
   location: "Somaliland",
-  /** Production URL. Update after you deploy (used for SEO, sitemap and social cards). */
-  url: "https://example.com",
+  /** Live URL (SEO, sitemap, social cards). Set automatically on GitHub Pages; replace the fallback if you use your own domain. */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://example.com",
 
   description:
-    "Independent web designer and developer creating fast, considered websites for businesses in Somaliland and around the world.",
+    "Digital experience designer creating modern, high-quality websites for businesses in Somaliland and around the world.",
 
   contact: {
     /**
      * PLACEHOLDERS. Replace with your real details, then set
      * `isPlaceholder` to false to remove the on-page notice.
      */
-    isPlaceholder: true,
-    email: "hello@example.com",
+    isPlaceholder: false,
+    email: "aahmdnassirali@gmail.com",
     /** WhatsApp number in international format, digits only (no +, spaces or dashes). */
-    whatsapp: "252630000000",
+    whatsapp: "252634444837",
     /** How the number is displayed on the page. */
-    whatsappDisplay: "+252 63 000 0000",
+    whatsappDisplay: "+252 63 4444837",
     /** Prefilled WhatsApp message. */
     whatsappMessage: "Hello, I found your portfolio and would like to talk about a website.",
     /**
@@ -72,23 +74,56 @@ export const site = {
   },
 
   hero: {
-    headline: ["Websites that earn", "trust before", "the first call."],
+    /** Each string is one line. Wrap a word in *asterisks* to set it in blue italic. */
+    headline: ["Your Business", "Deserves a *Better*", "Website."],
     intro:
-      "I design and build fast, considered websites for businesses in Somaliland and around the world.",
+      "I design and build modern, high-quality websites that help businesses earn trust, communicate their value, and make a stronger impression online.",
+    locationLine: "Based in Somaliland · Working worldwide",
   },
 
   projects: [
     {
+      slug: "qetc",
+      title: "QETC",
+      subtitle: "QETC Education & Training Consultancy",
+      summary: "A study-abroad platform for students from the Middle East and Africa heading to Malaysian universities.",
+      description:
+        "A full website for an education consultancy. Students search programmes across Malaysian universities, see fees in their own currency, and follow their offer, visa and arrival in one place, with an adviser consultation always close at hand.",
+      kind: "client",
+      status: "completed",
+      url: "https://qetcme.com/",
+      sector: "Education",
+      scope: ["Website design", "Development", "Responsive build"],
+      images: {
+        desktop: "/work/qetc-home.webp",
+        mobile: "/work/qetc-mobile.webp",
+        alt: "QETC website homepage: the headline Your degree in Malaysia, from first search to first lecture, with a programme search bar and a graduate photo.",
+        details: [
+          {
+            src: "/work/qetc-journey.webp",
+            alt: "QETC website: the seven-step student journey from application to travel, above an adviser consultation form.",
+            caption: "The student journey in seven steps, with an adviser form beside it.",
+          },
+          {
+            src: "/work/qetc-city.webp",
+            alt: "QETC website: Kuala Lumpur section with the city skyline at night and a live local clock.",
+            caption: "Kuala Lumpur, introduced as the student's new home.",
+          },
+        ],
+      },
+    },
+    {
       slug: "rssa",
       title: "RSSA",
-      summary: "Logistics website concept for a shipping agency at the Port of Berbera.",
+      subtitle: "Red Sea Service Agency",
+      summary: "A logistics website concept for a shipping agency at the Port of Berbera.",
       description:
-        "A self-initiated redesign concept for Red Sea Service Agency. The aim: make a complex service (booking cargo and releasing containers at Berbera) feel clear for importers in Somaliland and Ethiopia, with a quote request one tap away on every screen.",
+        "An independent redesign concept. The aim: make a complex service (booking cargo and releasing containers at Berbera) feel clear for importers in Somaliland and Ethiopia, with a quote request one tap away on every screen.",
       kind: "concept",
-      status: "live",
+      status: "completed",
       url: "https://rssa-concept-preview.vercel.app/",
       sector: "Logistics & shipping",
-      scope: ["Art direction", "UX & content structure", "Responsive design", "Front-end development"],
+      scope: ["Art direction", "UX & content", "Responsive design", "Development"],
       images: {
         desktop: "/work/rssa-home.webp",
         mobile: "/work/rssa-mobile.webp",
@@ -97,7 +132,7 @@ export const site = {
           {
             src: "/work/rssa-steps.webp",
             alt: "RSSA concept: a four-step container release guide with a documents checklist.",
-            caption: "Container release explained in four steps, with the documents checklist beside it.",
+            caption: "Container release, explained in four steps.",
           },
           {
             src: "/work/rssa-brand.webp",
@@ -109,26 +144,14 @@ export const site = {
     },
     {
       slug: "hotel",
-      title: "Hotel website",
+      title: "Hotel",
+      subtitle: "Hospitality website concept",
       summary: "A booking-focused website concept for a hotel.",
-      description:
-        "Rooms, photography and a direct enquiry path, designed to turn visitors into guests. Demo in progress.",
+      description: "Rooms, atmosphere and a direct enquiry path, designed to turn visitors into guests.",
       kind: "concept",
       status: "in-progress",
       url: null,
       sector: "Hospitality",
-      scope: ["Design", "Development"],
-    },
-    {
-      slug: "education",
-      title: "Education consultancy",
-      summary: "A website concept for a study-abroad and education consultancy.",
-      description:
-        "Clear programme pages and a simple consultation request for students and parents. Demo in progress.",
-      kind: "concept",
-      status: "in-progress",
-      url: null,
-      sector: "Education",
       scope: ["Design", "Development"],
     },
   ] as Project[],
@@ -136,19 +159,19 @@ export const site = {
   services: [
     {
       title: "Website design",
-      body: "Layout, typography, colour and content structure shaped around what your customers need to find and do.",
+      body: "Layout, typography and content structure shaped around what your customers need to find and do.",
     },
     {
       title: "Website development",
-      body: "Hand-built with modern tools (Next.js, TypeScript). Fast to load, easy to find on Google, simple to keep running.",
+      body: "Hand-built with modern tools (Next.js, TypeScript). Reliable, secure and simple to keep running.",
     },
     {
-      title: "Redesigns",
-      body: "Your current site, rethought. Clearer message, better structure, and a design that matches the business you are today.",
+      title: "Redesign",
+      body: "Your current site, rethought: a clearer message, better structure, and a look that matches the business you are today.",
     },
     {
-      title: "Responsive, mobile-first websites",
-      body: "Most visitors arrive on a phone, often on mobile data. Every page is designed for the small screen first and kept light.",
+      title: "Performance & SEO foundations",
+      body: "Fast-loading pages that work on mobile data, with the technical groundwork search engines expect.",
     },
     {
       title: "Maintenance",
@@ -157,15 +180,17 @@ export const site = {
   ],
 
   about: {
-    lead: "One person, start to finish.",
+    /** Wrap a phrase in *asterisks* to set it in blue italic. */
+    statement:
+      "I am a *digital experience* designer who designs and builds websites for businesses in Somaliland and around the world.",
     paragraphs: [
-      "I am an independent web designer and developer. I work directly with each client, from the first conversation to launch day and after, so nothing is lost between a designer, a developer and an account manager.",
-      "I build for businesses here in Somaliland and for clients abroad. Local businesses get someone who understands their customers and how they browse. International clients get a remote partner who communicates clearly and delivers on time.",
+      "You work with me directly, from the first conversation to launch day and after. The person who designs your website is the person who builds it, so nothing gets lost in a hand-off.",
+      "Local businesses get someone who understands their customers and how they browse. International clients get a remote partner who communicates clearly and keeps to agreed timelines.",
     ],
-    principles: [
-      { title: "Clarity first", body: "Visitors should understand what you do within seconds." },
-      { title: "Built to load fast", body: "Light pages that respect slow connections and small data plans." },
-      { title: "Honest work", body: "Clear scope, clear pricing, and you own your website." },
+    facts: [
+      { label: "Based in", value: "Somaliland" },
+      { label: "Working with", value: "Local & international businesses" },
+      { label: "Built with", value: "Next.js, TypeScript, Tailwind CSS" },
     ],
   },
 
@@ -176,20 +201,21 @@ export const site = {
     },
     {
       title: "Design",
-      body: "I design the key pages, desktop and mobile. You review real layouts with your real content, and we refine together.",
+      body: "I design the key pages for desktop and mobile. You review real layouts with your real content, and we refine together.",
     },
     {
       title: "Development",
-      body: "I build the site, tune it for speed, accessibility and search, and test it on phones, tablets and desktops.",
+      body: "I build the site and tune it for speed, accessibility and search, then test it on phones, tablets and desktops.",
     },
     {
       title: "Launch",
-      body: "We go live on your domain. I handle the setup and stay on hand for changes and maintenance afterwards.",
+      body: "We go live on your domain. I handle the setup and stay available for changes and maintenance afterwards.",
     },
   ],
 
   contactSection: {
-    headline: ["Have a project", "in mind?"],
+    /** Each string is one line. Wrap a word in *asterisks* to set it in blue italic. */
+    headline: ["Let’s Build", "Something *Great*", "Together."],
     body: "Tell me about your business and what you need. Whether you are across town or across the world, the first conversation is free.",
   },
 };

@@ -15,7 +15,7 @@ export default function Motion() {
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const targets = document.querySelectorAll<HTMLElement>("[data-reveal],[data-wipe],[data-lines]");
+    const targets = document.querySelectorAll<HTMLElement>("[data-reveal],[data-wipe],[data-lines],[data-curtain]");
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {

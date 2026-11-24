@@ -1,118 +1,143 @@
 import { site, whatsappHref, emailHref } from "@/config/site";
-import Intertitle from "./Intertitle";
 import ContactForm from "./ContactForm";
+import Emph from "./Emph";
 import Year from "./Year";
-
-function ChannelRow({
-  href,
-  label,
-  value,
-  external,
-  icon,
-}: {
-  href: string;
-  label: string;
-  value: string;
-  external?: boolean;
-  icon: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="group flex items-center gap-5 border-t border-rule-dark py-6 last:border-b"
-    >
-      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-rule-dark text-accent-light transition-colors duration-200 group-hover:border-accent-light group-hover:bg-accent-light group-hover:text-forest">
-        {icon}
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm text-bone-soft">{label}</span>
-        <span className="font-display track-tight block truncate text-xl font-medium sm:text-2xl">{value}</span>
-      </span>
-      <span
-        aria-hidden="true"
-        className="text-xl text-bone-soft transition-transform duration-200 group-hover:translate-x-1 group-hover:text-accent-light"
-      >
-        {external ? "↗" : "→"}
-      </span>
-      {external && <span className="sr-only">(opens in a new tab)</span>}
-    </a>
-  );
-}
-
-const WhatsAppIcon = (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
-    <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.2-.2-.2-.5-.4Z" />
-  </svg>
-);
-const MailIcon = (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-    <rect x="3" y="5" width="18" height="14" rx="2" />
-    <path d="m3.5 6.5 8.5 6.5 8.5-6.5" />
-  </svg>
-);
+import FitText from "./FitText";
+import { GmailIcon, WhatsAppIcon } from "./BrandIcons";
 
 export default function Contact() {
   const { contact, contactSection } = site;
+  const words = site.name.split(" ");
+  const last = words.pop() ?? "";
+  const lead = words.join(" ");
   return (
-    <section id="contact" className="ground-dark grain relative px-[var(--gutter)] pt-[var(--section)]">
-      <div className="mx-auto max-w-[1400px]">
-        <Intertitle n={5} title="Contact" dark />
-
-        <p
-          data-lines
-          className="font-display track-tighter text-[clamp(3rem,9vw,8rem)] font-semibold leading-[0.94]"
-        >
+    <section id="contact" className="grain relative scroll-mt-16 overflow-hidden border-t border-line bg-ink-0 px-[var(--gutter)] pt-[var(--section)]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(70% 55% at 100% 10%, rgba(58,96,255,0.16), transparent 70%)" }}
+      />
+      <div className="relative mx-auto max-w-[1560px]">
+        <p data-reveal className="label mb-10">Contact</p>
+        <h2 data-lines className="display text-[clamp(3.4rem,10vw,11rem)]">
           {contactSection.headline.map((l, i) => (
-            <span key={l} className="line-mask">
-              <span style={{ ["--d" as string]: `${i * 90}ms` }}>
-                {i === contactSection.headline.length - 1 ? (
-                  <>
-                    {l.replace(/\?$/, "")}
-                    <span className="text-accent-light">?</span>
-                  </>
-                ) : (
-                  l
-                )}
+            <span key={l} className={`line-mask ${i === 1 ? "md:pl-[8.33%]" : ""}`}>
+              <span style={{ ["--d" as string]: `${i * 100}ms` }}>
+                <Emph text={l} />
               </span>
             </span>
           ))}
-        </p>
+        </h2>
 
-        <div className="mt-16 grid gap-16 lg:grid-cols-12 lg:gap-12">
+        <div className="mt-20 grid gap-16 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <p data-reveal className="max-w-[40ch] text-lg leading-relaxed text-bone-soft">
+            <p data-reveal className="max-w-[36ch] text-lg leading-relaxed text-bone-2">
               {contactSection.body}
             </p>
-            <div data-reveal className="mt-10">
-              <ChannelRow href={whatsappHref} external label="WhatsApp" value={contact.whatsappDisplay} icon={WhatsAppIcon} />
-              <ChannelRow href={emailHref} label="Email" value={contact.email} icon={MailIcon} />
+
+            <div className="mt-12 border-t border-line">
+              <a
+                data-reveal
+                href={emailHref}
+                className="group flex items-center gap-5 border-b border-line py-6"
+              >
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-line-strong bg-bone transition-transform duration-300 group-hover:-rotate-6">
+                  <GmailIcon className="h-6 w-6" />
+                </span>
+                <span className="min-w-0">
+                  <span className="label block">Email · Gmail</span>
+                  <span className="display mt-1 block break-all text-[clamp(1.7rem,3vw,2.7rem)] leading-tight transition-colors duration-200 group-hover:text-blue">
+                    {contact.email}
+                  </span>
+                </span>
+              </a>
+              <a
+                data-reveal
+                style={{ ["--d" as string]: "80ms" }}
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-5 border-b border-line py-6"
+              >
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#25D366] text-white transition-transform duration-300 group-hover:-rotate-6">
+                  <WhatsAppIcon className="h-7 w-7" />
+                </span>
+                <span className="min-w-0">
+                  <span className="label block">WhatsApp</span>
+                  <span className="display mt-1 block text-[clamp(1.7rem,3vw,2.7rem)] leading-tight transition-colors duration-200 group-hover:text-blue">
+                    {contact.whatsappDisplay}
+                  </span>
+                </span>
+                <span className="sr-only"> (opens a WhatsApp chat)</span>
+              </a>
             </div>
-            <p data-reveal className="mt-6 text-sm text-bone-soft">{contact.responseTime}</p>
+
+            <a
+              data-reveal
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn mt-10 bg-[#25D366] text-[#06190e] hover:bg-[#3ee27a]"
+            >
+              <WhatsAppIcon className="h-5 w-5" />
+              Chat on WhatsApp
+              <span className="arrow" aria-hidden="true">→</span>
+              <span className="sr-only">(opens a WhatsApp chat)</span>
+            </a>
+
+            <p data-reveal className="mt-10 flex items-center gap-3 text-sm text-bone-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue" aria-hidden="true" />
+              {contact.responseTime}
+            </p>
             {contact.isPlaceholder && (
-              <p className="mt-6 rounded-md border border-dashed border-rule-dark px-4 py-3 text-sm text-bone-soft">
-                Note: the contact details on this page are placeholders until the real ones are added.
+              <p className="mt-6 max-w-[40ch] border-l border-line-strong pl-4 text-sm text-bone-3">
+                The email and WhatsApp details shown are placeholders until the real ones are added.
               </p>
             )}
           </div>
 
-          <div data-reveal className="lg:col-span-6 lg:col-start-7">
+          <div data-reveal className="rounded-[18px] border border-line bg-ink-1/80 p-6 sm:p-10 lg:col-span-6 lg:col-start-7">
+            <p className="display mb-8 text-3xl">Send a message</p>
             <ContactForm />
           </div>
         </div>
-      </div>
 
-      {/* colophon */}
-      <footer className="mx-auto mt-[var(--section)] max-w-[1400px] border-t border-rule-dark py-8 text-sm text-bone-soft">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © <Year /> {site.name}. Based in {site.location}, working worldwide.
-          </p>
-          <a href="#top" className="link-u self-start text-bone sm:self-auto">
-            Back to top ↑
-          </a>
-        </div>
-      </footer>
+        {/* sign-off: the title set edge to edge */}
+        <footer className="mt-[var(--section)] border-t border-line pb-8 pt-8">
+          <div className="grid gap-4 text-sm text-bone-2 sm:grid-cols-3">
+            <a href={emailHref} className="inline-flex items-center gap-2 justify-self-start hover:text-bone">
+              <GmailIcon className="h-4 w-4" />
+              <span className="link-u">{contact.email}</span>
+            </a>
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 justify-self-start hover:text-bone sm:justify-self-center">
+              <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+              <span className="link-u">{contact.whatsappDisplay}</span><span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <p className="sm:text-right">{site.hero.locationLine}</p>
+          </div>
+
+          <div aria-hidden="true" className="mt-12 select-none sm:mt-16">
+            <FitText className="display hidden leading-[0.82] sm:block">
+              {lead} <em>{last}</em>
+            </FitText>
+            <div className="sm:hidden">
+              <FitText className="display leading-[0.86]">{lead}</FitText>
+              <FitText className="display leading-[0.86]">
+                <em>{last}</em>
+              </FitText>
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-col gap-4 border-t border-line pt-6 text-sm text-bone-3 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              © <Year /> {site.name}. All rights reserved.
+            </p>
+            <a href="#top" className="link-u self-start text-bone sm:self-auto">
+              Back to top ↑
+            </a>
+          </div>
+        </footer>
+      </div>
     </section>
   );
 }

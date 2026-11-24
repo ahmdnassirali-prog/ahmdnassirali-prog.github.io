@@ -1,181 +1,199 @@
 @import "tailwindcss";
 
-/* ─── Design tokens ─────────────────────────────────────────── */
+/* ─── Design tokens: "night edition" ────────────────────────── */
 :root {
-  /* Light ground (paper) */
-  --paper: #efeee8;
-  --paper-2: #e5e3da;
-  --ink: #111813;
-  --ink-soft: #4a544c;
-  --rule: #c9c8bd;
-  --accent: #8a4b00; /* amber, dark stop for light grounds */
+  /* tonal grounds, darkest to lightest */
+  --ink-0: #09090b;
+  --ink-1: #0e0f12;
+  --ink-2: #15171b;
+  --ink-3: #1d2026;
 
-  /* Dark ground (forest) */
-  --forest: #0e261c;
-  --forest-2: #143326;
-  --bone: #eeece4;
-  --bone-soft: #a8b4ab;
-  --rule-dark: #2a4a3b;
-  --accent-light: #eaa53d; /* amber, light stop for dark grounds */
+  /* warm off-white type */
+  --bone: #ede7dc;
+  --bone-2: #b9b2a6;   /* secondary, tinted not grey */
+  --bone-3: #8c867c;   /* tertiary: meta, captions */
+
+  /* hairlines */
+  --line: rgba(237, 231, 220, 0.12);
+  --line-strong: rgba(237, 231, 220, 0.22);
+
+  /* restrained electric blue */
+  --blue: #5a86ff;      /* text + marks on dark (5.6:1 on ink-0) */
+  --blue-deep: #2f5bf0; /* fills */
+  --blue-glow: rgba(70, 110, 255, 0.22);
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  --gutter: clamp(1.25rem, 4vw, 3.5rem);
-  --section: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1.25rem, 4.2vw, 4rem);
+  --section: clamp(6rem, 13vw, 12rem);
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-paper-2: var(--paper-2);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-rule: var(--rule);
-  --color-accent: var(--accent);
-  --color-forest: var(--forest);
-  --color-forest-2: var(--forest-2);
+  --color-ink-0: var(--ink-0);
+  --color-ink-1: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
   --color-bone: var(--bone);
-  --color-bone-soft: var(--bone-soft);
-  --color-rule-dark: var(--rule-dark);
-  --color-accent-light: var(--accent-light);
+  --color-bone-2: var(--bone-2);
+  --color-bone-3: var(--bone-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-blue: var(--blue);
+  --color-blue-deep: var(--blue-deep);
   --font-sans: var(--font-geist);
-  --font-display: var(--font-bricolage);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument);
 }
 
 /* ─── Base ──────────────────────────────────────────────────── */
 html {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ink-0);
+  color: var(--bone);
+  color-scheme: dark;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  scrollbar-color: var(--ink-soft) var(--paper-2);
+  scrollbar-color: var(--ink-3) var(--ink-0);
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ink-0);
+  color: var(--bone);
   font-family: var(--font-geist), system-ui, sans-serif;
-  font-feature-settings: "ss01", "cv11";
-  text-rendering: optimizeLegibility;
+  /* light-on-dark compensation: a touch more leading and tracking */
+  line-height: 1.6;
+  letter-spacing: 0.005em;
   overflow-x: clip;
 }
 
-::selection { background: var(--ink); color: var(--paper); }
-.ground-dark ::selection { background: var(--accent-light); color: var(--forest); }
+::selection { background: var(--blue-deep); color: #fff; }
+input, textarea { caret-color: var(--blue); }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
   border-radius: 2px;
 }
-.ground-dark :focus-visible { outline-color: var(--accent-light); }
 
 h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
-
 a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
 
-/* Grounds: restate colour wherever the ink tokens change */
-.ground-dark {
-  background: var(--forest);
-  color: var(--bone);
-  --accent: var(--accent-light);
+/* ─── Type ──────────────────────────────────────────────────── */
+.display {
+  font-family: var(--font-instrument), "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+}
+.display em { font-style: italic; color: var(--blue); letter-spacing: -0.035em; padding-right: 0.04em; }
+
+.label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone-3);
 }
 
-.font-display {
-  font-family: var(--font-bricolage), system-ui, sans-serif;
-  font-optical-sizing: auto;
-}
-.track-tight { letter-spacing: -0.035em; }
-.track-tighter { letter-spacing: -0.05em; }
-
-/* Subtle paper grain so flat grounds don't band */
+/* ─── Atmosphere ────────────────────────────────────────────── */
+.grain { position: relative; }
 .grain::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  mix-blend-mode: multiply;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+  z-index: 1;
 }
-.ground-dark.grain::after { mix-blend-mode: screen; opacity: 0.04; }
+
+/* fine vertical column rules, like a layout grid left visible */
+.rules {
+  background-image: linear-gradient(to right, var(--line) 1px, transparent 1px);
+  background-size: calc((100% - 2 * var(--gutter)) / 6) 100%;
+  background-position: var(--gutter) 0;
+  background-repeat: repeat-x;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 70%, transparent);
+  opacity: 0.55;
+}
 
 /* ─── Motion primitives ─────────────────────────────────────── */
-
-/* Reveal on enter: fade + small rise */
 [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 18px, 0);
-  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
   transition-delay: var(--d, 0ms);
 }
 [data-reveal].is-in { opacity: 1; transform: none; }
 
-/* Line-by-line headline: each line slides up from behind a mask */
-.line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
 .line-mask > span {
   display: block;
-  transform: translate3d(0, 105%, 0);
-  transition: transform 1.1s var(--ease-out);
+  transform: translate3d(0, 108%, 0);
+  transition: transform 1.2s var(--ease-out);
   transition-delay: var(--d, 0ms);
 }
 .is-in .line-mask > span, .line-mask.is-in > span { transform: none; }
 
-/* Clip wipe for chapter rules and media */
 [data-wipe] {
   clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.2s var(--ease-in-out);
+  transition: clip-path 1.3s var(--ease-in-out);
   transition-delay: var(--d, 0ms);
 }
 [data-wipe].is-in { clip-path: inset(0 0 0 0); }
 
-/* No JS: show everything */
+/* image curtain: media rises from a dark plate */
+[data-curtain] { clip-path: inset(14% 0 0 0); opacity: 0.001; transition: clip-path 1.4s var(--ease-out), opacity 0.8s var(--ease-out); transition-delay: var(--d, 0ms); }
+[data-curtain].is-in { clip-path: inset(0 0 0 0); opacity: 1; }
+
 html:not(.js) [data-reveal],
-html:not(.js) [data-wipe] { opacity: 1; transform: none; clip-path: none; }
+html:not(.js) [data-wipe],
+html:not(.js) [data-curtain] { opacity: 1; transform: none; clip-path: none; }
 html:not(.js) .line-mask > span { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { transform: none; transition: opacity 0.6s linear; }
   .line-mask > span { transform: none; transition: none; }
-  [data-wipe] { clip-path: none; transition: none; }
+  [data-wipe], [data-curtain] { clip-path: none; transition: opacity 0.6s linear; }
   [data-parallax] { transform: none !important; }
 }
 
-/* ─── Buttons ───────────────────────────────────────────────── */
+/* ─── Buttons & links ───────────────────────────────────────── */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  height: 3.25rem;
-  padding: 0 1.5rem;
+  gap: 0.75rem;
+  height: 3.4rem;
+  padding: 0 1.6rem;
   border-radius: 999px;
+  font-size: 0.95rem;
   font-weight: 500;
-  font-size: 0.975rem;
   white-space: nowrap;
-  transition: transform 160ms var(--ease-out), background-color 180ms var(--ease-out),
-    color 180ms var(--ease-out), border-color 180ms var(--ease-out);
+  transition: transform 160ms var(--ease-out), background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out), border-color 200ms var(--ease-out);
 }
 .btn:active { transform: scale(0.97); }
-.btn-solid { background: var(--ink); color: var(--paper); }
-.btn-ghost { border: 1px solid color-mix(in oklab, currentColor 35%, transparent); }
-.ground-dark .btn-solid { background: var(--accent-light); color: var(--forest); }
-.btn .arrow { transition: transform 180ms var(--ease-out); }
+.btn-primary { background: var(--bone); color: var(--ink-0); }
+.btn-outline { border: 1px solid var(--line-strong); color: var(--bone); }
+.btn .arrow { display: inline-block; transition: transform 200ms var(--ease-out); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
 @media (hover: hover) and (pointer: fine) {
-  .btn-solid:hover { background: var(--accent); }
-  .ground-dark .btn-solid:hover { background: var(--bone); }
-  .btn-ghost:hover { border-color: currentColor; }
-  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-primary:hover { background: var(--blue-deep); color: #fff; }
+  .btn-outline:hover { border-color: var(--bone); }
+  .btn:hover .arrow { transform: translateX(4px); }
 }
 
-/* Underlined text link */
 .link-u {
   background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
   padding-bottom: 2px;
-  transition: background-size 260ms var(--ease-out), color 160ms var(--ease-out);
+  transition: background-size 280ms var(--ease-out), color 180ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .link-u:hover { background-size: 0% 1px; background-position: 100% 100%; }
@@ -193,15 +211,26 @@ html:not(.js) .line-mask > span { transform: none; }
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--rule-dark);
-  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line-strong);
+  padding: 0.9rem 0;
   color: var(--bone);
   font-size: 1.05rem;
   border-radius: 0;
-  transition: border-color 180ms var(--ease-out);
+  transition: border-color 200ms var(--ease-out);
 }
-.field::placeholder { color: color-mix(in oklab, var(--bone-soft) 70%, transparent); }
-.field:focus { outline: none; border-bottom-color: var(--accent-light); }
-.field:focus-visible { outline: none; box-shadow: 0 2px 0 0 var(--accent-light); }
-select.field { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--bone-soft) 50%), linear-gradient(135deg, var(--bone-soft) 50%, transparent 50%); background-position: calc(100% - 12px) 55%, calc(100% - 7px) 55%; background-size: 5px 5px; background-repeat: no-repeat; }
-select.field option { background: var(--forest); color: var(--bone); }
+.field::placeholder { color: var(--bone-3); }
+.field:focus { outline: none; border-bottom-color: var(--blue); }
+.field:focus-visible { outline: none; box-shadow: 0 1px 0 0 var(--blue); }
+select.field {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--bone-2) 50%), linear-gradient(135deg, var(--bone-2) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 55%, calc(100% - 7px) 55%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+select.field option { background: var(--ink-2); color: var(--bone); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: none; }
+}
