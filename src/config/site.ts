@@ -179,6 +179,50 @@ export const site = {
     },
   ],
 
+  /** Packages shown in the Pricing section. Prices in USD. */
+  pricing: {
+    /** Name used in the pre-filled WhatsApp message ("Hi Ahmednassir, ..."). */
+    greetingName: "Ahmednassir",
+    packages: [
+      {
+        name: "Basic",
+        price: 250,
+        featured: false,
+        features: [
+          "1-page website using the client’s own photos",
+          "Call and WhatsApp buttons, enquiry form that sends to WhatsApp",
+          "Fully mobile-friendly",
+        ],
+        terms: "1 round of revisions · Delivery in 7 days",
+      },
+      {
+        name: "Standard",
+        price: 400,
+        featured: true,
+        features: [
+          "Everything in Basic",
+          "Premium animated design with one signature feature",
+          "Offers/photo gallery and Google Maps location",
+          "Basic Google search setup",
+        ],
+        terms: "2 rounds of revisions · Delivery in 10 days",
+      },
+      {
+        name: "Premium",
+        price: 700,
+        featured: false,
+        features: [
+          "Up to 5 pages (Home, Services, About/Team, Offers, Contact)",
+          "Somali + English versions",
+          "Google Business profile cleanup",
+          "First month of updates free",
+        ],
+        terms: "3 rounds of revisions · Delivery in 14 days",
+      },
+    ],
+    note: "Optional monthly updates: $30/month. Domain (about $15/year) is registered in the client’s name.",
+  },
+
   about: {
     /** Wrap a phrase in *asterisks* to set it in blue italic. */
     statement:
@@ -224,3 +268,9 @@ export type Site = typeof site;
 
 export const whatsappHref = `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(site.contact.whatsappMessage)}`;
 export const emailHref = `mailto:${site.contact.email}`;
+
+/** WhatsApp chat link with a message naming the chosen package. */
+export const packageHref = (packageName: string) =>
+  `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(
+    `Hi ${site.pricing.greetingName}, I'm interested in the ${packageName} website package.`,
+  )}`;
