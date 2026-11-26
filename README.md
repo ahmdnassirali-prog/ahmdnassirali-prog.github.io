@@ -37,7 +37,7 @@ Add an entry to `projects`:
 - `status: "completed"` with a `url` and `images` makes it a full clickable feature (consecutive projects alternate their layout automatically). `status: "in-progress"` shows a placeholder card with no link.
 - Put screenshots in `public/work/` (WebP, about 1600px wide). Desktop screenshots should be 1600×956 to match the layout; if yours differ, update the `width`/`height` in `src/components/Work.tsx`.
 
-When the hotel demo is ready, change its `status` to `"completed"` and add `url` and `images`.
+To add a future project as a placeholder, use `status: "in-progress"` (no `url` or `images`); it appears in the index as "In development".
 
 ## Run locally
 
@@ -114,4 +114,4 @@ public/work/              project screenshots
 - **Hero:** the real RSSA work is staged as layered planes in perspective (second screen, browser, phone) that move at different rates on scroll.
 - **Signature moment:** the Process section pins on large screens. One browser frame goes from sitemap (Discovery) to wireframe (Design), wipes into the real RSSA page (Development), and its address bar goes live (Launch). Phones and reduced-motion users get a stacked version.
 - **Motion** uses only `transform`, `opacity` and `clip-path`, and respects `prefers-reduced-motion`. Content stays visible if JavaScript is off.
-- **Honesty:** no invented clients, testimonials or numbers. RSSA is labelled as a completed independent concept (not commissioned); QETC as completed client work. The hotel concept is marked "In development. No live demo yet."
+- **Honesty:** no invented clients, testimonials or numbers. RSSA is labelled as a completed independent concept (not commissioned); QETC as completed client work. Degelsame Hotel is labelled as a completed independent concept.
