@@ -77,7 +77,7 @@ export const site = {
     /** Each string is one line. Wrap a word in *asterisks* to set it in blue italic. */
     greeting: ["Hello, I’m", "*Ahmednassir*."],
     role: "Web designer & developer",
-    intro: "I’m a digital experience designer. I design new websites and redesign outdated ones for businesses that want to stand out online.",
+    intro: "I’m a digital experience designer. I create new websites and refresh outdated ones for businesses that want to stand out online.",
     locationLine: "Based in Somaliland · Working worldwide",
     /** Your portrait, shown exactly as supplied (no cut-out, no retouching). */
     photo: {

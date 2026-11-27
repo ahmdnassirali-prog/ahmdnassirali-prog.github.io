@@ -7,7 +7,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="grain relative scroll-mt-16 border-t border-line bg-ink-1 px-[var(--gutter)] py-[var(--section)]"
+      className="grain relative scroll-mt-16 border-t border-line bg-ink-1 px-[var(--gutter)] py-[clamp(4rem,7vw,6rem)]"
     >
       <div
         aria-hidden="true"
@@ -27,19 +27,19 @@ export default function Services() {
               key={s.title}
               data-reveal
               style={{ ["--d" as string]: `${i * 70}ms` }}
-              className="group relative bg-ink-1 p-6 transition-colors duration-300 sm:p-9 [@media(hover:hover)]:hover:bg-ink-2"
+              className="group relative bg-ink-1 p-5 transition-colors duration-300 sm:p-6 [@media(hover:hover)]:hover:bg-ink-2"
             >
               <span
                 aria-hidden="true"
                 className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-blue transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-x-100"
               />
               <span className="font-mono text-xs text-blue">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="display mt-5 text-[2.2rem] leading-none sm:mt-16 sm:text-[2.6rem]">{s.title}</h3>
-              <p className="mt-4 max-w-[34ch] leading-relaxed text-bone-2">{s.body}</p>
+              <h3 className="display mt-3 text-[1.7rem] leading-none sm:mt-5 sm:text-[1.9rem]">{s.title}</h3>
+              <p className="mt-2.5 max-w-[38ch] text-[0.95rem] leading-relaxed text-bone-2">{s.body}</p>
             </li>
           ))}
-          <li className="relative flex flex-col justify-between gap-10 bg-ink-2 p-7 sm:p-9">
-            <p className="display text-[2.2rem] leading-[1.02] sm:text-[2.6rem]">
+          <li className="relative flex flex-col justify-between gap-6 bg-ink-2 p-5 sm:p-6">
+            <p className="display text-[1.7rem] leading-[1.02] sm:text-[1.9rem]">
               Not sure what you need? <em>Ask.</em>
             </p>
             <a href="#contact" className="btn btn-outline self-start">

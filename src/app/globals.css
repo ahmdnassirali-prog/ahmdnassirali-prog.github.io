@@ -233,3 +233,6 @@ html:not(.js) .orbit .draw { stroke-dashoffset: 0; }
   from { opacity: 0; transform: translate3d(0, 14px, 0); }
   to { opacity: 1; transform: none; }
 }
+
+/* hand-written signature */
+.signature { font-family: var(--font-signature), "Brush Script MT", cursive; font-weight: 400; }

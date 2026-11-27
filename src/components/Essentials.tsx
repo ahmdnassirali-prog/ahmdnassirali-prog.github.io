@@ -68,21 +68,34 @@ function GenericSite({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function Card({ n, title, body }: { n: number; title: string; body: string }) {
+const arrowHead = (
+  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#7da2ff" />
+  </marker>
+);
+
+/** One of the three points, drawn inside the screen. Sizes are container units of the screen. */
+function Point({ n, title, body, compact }: { n: number; title: string; body: string; compact?: boolean }) {
   return (
-    <div className="rounded-[1.3rem] bg-bone p-5 text-ink-0 shadow-[0_30px_60px_-28px_rgba(0,0,0,0.95)] xl:p-6">
-      <p className="display text-[2.6rem] leading-none text-blue-deep">{n}.</p>
-      <h3 className="mt-2 text-[1.2rem] font-semibold uppercase leading-tight tracking-tight">{title}</h3>
-      <p className="mt-1.5 text-[0.92rem] leading-snug text-ink-3/80">{body}</p>
+    <div
+      className="rounded-[1.2cqw] border border-[rgba(125,162,255,0.45)] bg-[#0e1634]/92 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.9)] backdrop-blur"
+      style={{ padding: compact ? "3.6cqw 4.4cqw" : "1.5cqw 1.7cqw" }}
+    >
+      <p className="flex items-center font-semibold uppercase tracking-tight text-bone" style={{ gap: compact ? "2.4cqw" : "0.9cqw", fontSize: compact ? "4.6cqw" : "1.65cqw" }}>
+        <span
+          className="grid shrink-0 place-items-center rounded-full bg-blue-deep font-mono text-white"
+          style={{ width: compact ? "7cqw" : "2.6cqw", height: compact ? "7cqw" : "2.6cqw", fontSize: compact ? "3.8cqw" : "1.35cqw" }}
+        >
+          {n}
+        </span>
+        {title}
+      </p>
+      <p className="text-bone-2" style={{ marginTop: compact ? "1.4cqw" : "0.6cqw", fontSize: compact ? "3.9cqw" : "1.35cqw", lineHeight: 1.35 }}>
+        {body}
+      </p>
     </div>
   );
 }
-
-const arrowHead = (
-  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-    <path d="M0 0L10 5L0 10z" fill="var(--blue)" />
-  </marker>
-);
 
 export default function Essentials() {
   const [a, b, c] = site.essentials;
@@ -104,66 +117,66 @@ export default function Essentials() {
           Want more customers from your website? Start with these three.
         </p>
 
-        {/* desktop: card | arrow | laptop | arrows | cards */}
-        <div className="mt-10 hidden items-center lg:grid lg:grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,2.1fr)_4.5rem_minmax(0,1fr)]">
-          <div data-reveal style={{ ["--d" as string]: "300ms" }}>
-            <Card n={1} title={a.title} body={a.body} />
-          </div>
-          <svg aria-hidden="true" viewBox="0 0 72 40" className="draw-on w-full" data-reveal style={{ ["--d" as string]: "500ms" }} fill="none">
-            <defs>{arrowHead}</defs>
-            <path pathLength={1} d="M70 20 C 50 6, 26 6, 6 20" stroke="var(--blue)" strokeWidth="2" markerEnd="url(#ah)" />
-          </svg>
-          <div data-reveal className="relative">
-            <div className="rounded-t-[1.1rem] bg-[#0b0c10] p-[1.8%] pb-[2.6%] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)] ring-1 ring-line-strong">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-[0.3rem]">
-                <GenericSite />
+        {/* tablets & desktop: laptop, the three points inside the screen */}
+        <div data-reveal className="relative mx-auto mt-10 hidden w-full max-w-[980px] sm:block">
+          <div className="rounded-t-[1.1rem] bg-[#0b0c10] p-[1.6%] pb-[2.4%] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)] ring-1 ring-line-strong">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-[0.3rem] [container-type:inline-size]">
+              <GenericSite />
+              <div aria-hidden="true" className="absolute inset-0 bg-[#05070f]/45" />
+              {/* markers on the page */}
+              {[
+                { n: 1, x: "13%", y: "47%" },
+                { n: 2, x: "75%", y: "38%" },
+                { n: 3, x: "50%", y: "86%" },
+              ].map((d) => (
+                <span
+                  key={d.n}
+                  aria-hidden="true"
+                  className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-deep shadow-[0_0_0_0.8cqw_rgba(58,96,255,0.3)]"
+                  style={{ left: d.x, top: d.y, width: "1.6cqw", height: "1.6cqw" }}
+                />
+              ))}
+              <svg aria-hidden="true" viewBox="0 0 160 100" preserveAspectRatio="none" className="draw-on absolute inset-0 h-full w-full" data-reveal style={{ ["--d" as string]: "400ms" }} fill="none">
+                <defs>{arrowHead}</defs>
+                <path pathLength={1} d="M20.8 47 C 20 56, 14 58, 12 63" stroke="#7da2ff" strokeWidth="1.6" vectorEffect="non-scaling-stroke" markerEnd="url(#ah)" />
+                <path pathLength={1} d="M120 38 C 126 32, 128 24, 128 21" stroke="#7da2ff" strokeWidth="1.6" vectorEffect="non-scaling-stroke" markerEnd="url(#ah)" />
+                <path pathLength={1} d="M80 86 C 92 86, 100 80, 104 73" stroke="#7da2ff" strokeWidth="1.6" vectorEffect="non-scaling-stroke" markerEnd="url(#ah)" />
+              </svg>
+              {/* the three points */}
+              <div data-reveal style={{ ["--d" as string]: "600ms" }} className="absolute left-[3%] top-[64%] w-[29%]">
+                <Point n={1} title={a.title} body={a.body} />
+              </div>
+              <div data-reveal style={{ ["--d" as string]: "750ms" }} className="absolute right-[3%] top-[4%] w-[29%]">
+                <Point n={2} title={b.title} body={b.body} />
+              </div>
+              <div data-reveal style={{ ["--d" as string]: "900ms" }} className="absolute left-[60%] top-[50%] w-[29%]">
+                <Point n={3} title={c.title} body={c.body} />
               </div>
             </div>
-            <div aria-hidden="true" className="relative -mx-[7%] h-[clamp(10px,1.3vw,16px)] rounded-b-[1.1rem] bg-gradient-to-b from-[#3a3d45] via-[#26282e] to-[#16171b] ring-1 ring-line">
-              <div className="absolute left-1/2 top-0 h-[42%] w-[15%] -translate-x-1/2 rounded-b-[0.5rem] bg-[#4a4d56]" />
-            </div>
           </div>
-          <svg aria-hidden="true" viewBox="0 0 72 300" preserveAspectRatio="none" className="draw-on h-[19rem] w-full" data-reveal style={{ ["--d" as string]: "650ms" }} fill="none">
-            <defs>{arrowHead}</defs>
-            <path pathLength={1} d="M2 150 C 40 150, 30 62, 66 62" stroke="var(--blue)" strokeWidth="2" vectorEffect="non-scaling-stroke" markerEnd="url(#ah)" />
-            <path pathLength={1} d="M2 150 C 40 150, 30 238, 66 238" stroke="var(--blue)" strokeWidth="2" vectorEffect="non-scaling-stroke" markerEnd="url(#ah)" />
-          </svg>
-          <div className="flex h-[22rem] flex-col justify-between">
-            <div data-reveal style={{ ["--d" as string]: "800ms" }}>
-              <Card n={2} title={b.title} body={b.body} />
-            </div>
-            <div data-reveal style={{ ["--d" as string]: "950ms" }}>
-              <Card n={3} title={c.title} body={c.body} />
+          <div aria-hidden="true" className="relative -mx-[6%] h-[clamp(10px,1.3vw,16px)] rounded-b-[1.1rem] bg-gradient-to-b from-[#3a3d45] via-[#26282e] to-[#16171b] ring-1 ring-line">
+            <div className="absolute left-1/2 top-0 h-[42%] w-[15%] -translate-x-1/2 rounded-b-[0.5rem] bg-[#4a4d56]" />
+          </div>
+        </div>
+
+        {/* phones: a phone with the three points inside */}
+        <div data-reveal className="mx-auto mt-8 w-[78%] max-w-[20rem] sm:hidden">
+          <div className="rounded-[2rem] bg-[#0b0c10] p-[3.5%] ring-1 ring-line-strong">
+            <div className="relative aspect-[9/17] overflow-hidden rounded-[1.6rem] [container-type:inline-size]">
+              <GenericSite compact />
+              <div aria-hidden="true" className="absolute inset-0 bg-[#05070f]/55" />
+              <div className="absolute inset-x-[5%] bottom-[5%] flex flex-col" style={{ gap: "3cqw" }}>
+                {[a, b, c].map((e, i) => (
+                  <Point key={e.title} n={i + 1} title={e.title} body={e.body} compact />
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* phones & tablets: laptop, arrow, cards */}
-        <div className="mt-10 lg:hidden">
-          <div data-reveal className="mx-auto w-[94%] max-w-[36rem]">
-            <div className="rounded-t-[1rem] bg-[#0b0c10] p-[1.8%] pb-[2.6%] ring-1 ring-line-strong">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-[0.3rem]">
-                <GenericSite />
-              </div>
-            </div>
-            <div aria-hidden="true" className="-mx-[7%] h-3 rounded-b-[1rem] bg-gradient-to-b from-[#3a3d45] to-[#16171b]" />
-          </div>
-          <svg aria-hidden="true" viewBox="0 0 40 60" className="draw-on mx-auto my-4 h-14 w-10" data-reveal fill="none">
-            <defs>{arrowHead}</defs>
-            <path pathLength={1} d="M20 2 C 8 20, 32 34, 20 54" stroke="var(--blue)" strokeWidth="2" markerEnd="url(#ah)" />
-          </svg>
-          <ol className="grid gap-3 sm:grid-cols-3">
-            {[a, b, c].map((e, i) => (
-              <li key={e.title} data-reveal style={{ ["--d" as string]: `${i * 80}ms` }}>
-                <Card n={i + 1} title={e.title} body={e.body} />
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <p data-reveal className="mt-10 text-center">
-          <span className="display text-[1.5rem] italic text-bone-2">Your website isn’t just a page online. </span>
-          <span className="display text-[1.5rem]">
+        <p data-reveal className="mt-8 text-center">
+          <span className="display text-[1.4rem] italic text-bone-2">Your website isn’t just a page online. </span>
+          <span className="display text-[1.4rem]">
             It’s your <em className="text-blue">best salesperson.</em>
           </span>
         </p>

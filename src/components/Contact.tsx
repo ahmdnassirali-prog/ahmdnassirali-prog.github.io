@@ -1,5 +1,4 @@
 import { site, whatsappHref, emailHref } from "@/config/site";
-import ContactForm from "./ContactForm";
 import Emph from "./Emph";
 import Year from "./Year";
 import FitText from "./FitText";
@@ -34,8 +33,9 @@ export default function Contact() {
             <p data-reveal className="max-w-[36ch] text-lg leading-relaxed text-bone-2">
               {contactSection.body}
             </p>
-
-            <div className="mt-12 border-t border-line">
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <div className="border-t border-line">
               <a
                 data-reveal
                 href={emailHref}
@@ -72,18 +72,7 @@ export default function Contact() {
               </a>
             </div>
 
-            <a
-              data-reveal
-              href={whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn mt-10 bg-[#25D366] text-[#06190e] hover:bg-[#3ee27a]"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-              Chat on WhatsApp
-              <span className="arrow" aria-hidden="true">→</span>
-              <span className="sr-only">(opens a WhatsApp chat)</span>
-            </a>
+
 
             <p data-reveal className="mt-10 flex items-center gap-3 text-sm text-bone-2">
               <span className="h-1.5 w-1.5 rounded-full bg-blue" aria-hidden="true" />
@@ -96,27 +85,14 @@ export default function Contact() {
             )}
           </div>
 
-          <div data-reveal className="rounded-[18px] border border-line bg-ink-1/80 p-6 sm:p-10 lg:col-span-6 lg:col-start-7">
-            <p className="display mb-8 text-3xl">Send a message</p>
-            <ContactForm />
-          </div>
         </div>
 
         {/* sign-off: the title set edge to edge */}
-        <footer className="mt-[var(--section)] border-t border-line pb-8 pt-8">
-          <div className="grid gap-4 text-sm text-bone-2 sm:grid-cols-3">
-            <a href={emailHref} className="inline-flex items-center gap-2 justify-self-start hover:text-bone">
-              <GmailIcon className="h-4 w-4" />
-              <span className="link-u">{contact.email}</span>
-            </a>
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 justify-self-start hover:text-bone sm:justify-self-center">
-              <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
-              <span className="link-u">{contact.whatsappDisplay}</span><span className="sr-only"> (opens in a new tab)</span>
-            </a>
-            <p className="sm:text-right">{site.hero.locationLine}</p>
-          </div>
-
-          <div aria-hidden="true" className="mt-12 select-none sm:mt-16">
+        <footer className="mt-[var(--section)] border-t border-line pb-8 pt-12">
+          <p data-reveal className="signature -rotate-3 text-[clamp(3.4rem,8vw,7rem)] leading-none text-blue">
+            {site.ownerName.split(" ")[0]}
+          </p>
+          <div aria-hidden="true" className="mt-2 select-none sm:mt-4">
             <FitText className="display hidden leading-[0.82] sm:block">
               {lead} <em>{last}</em>
             </FitText>

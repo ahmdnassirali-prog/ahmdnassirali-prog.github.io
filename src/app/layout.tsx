@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif, Allison } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
 import Motion from "@/components/Motion";
@@ -13,6 +13,9 @@ const instrument = Instrument_Serif({
   weight: "400",
   style: ["normal", "italic"],
 });
+
+/** Hand-written signature above the footer wordmark. */
+const signature = Allison({ variable: "--font-signature", subsets: ["latin"], weight: "400", display: "swap" });
 
 export const metadata: Metadata = {
   // Origin only: Next adds the base path itself to file-based images like the share image.
@@ -62,7 +65,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrument.variable} antialiased`}
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrument.variable} ${signature.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
