@@ -112,6 +112,7 @@ public/work/              project screenshots
 - **Type:** Instrument Serif for oversized display headings, Geist for text, Geist Mono for small labels. All self-hosted by `next/font`.
 - **Blue emphasis:** in `site.ts`, wrap a word in asterisks (`"Deserves a *Better*"`) to set it in blue italic.
 - **Hero:** the real RSSA work is staged as layered planes in perspective (second screen, browser, phone) that move at different rates on scroll.
-- **Signature moment:** the Process section pins on large screens. One browser frame goes from sitemap (Discovery) to wireframe (Design), wipes into the real RSSA page (Development), and its address bar goes live (Launch). Phones and reduced-motion users get a stacked version.
+- **Process** is a plain four-step list (Discovery, Design, Development, Launch).
+- **Pricing** is a vertical list; each package opens to show its full details and a WhatsApp "Get started" button. Edit packages in `site.ts` → `pricing`.
 - **Motion** uses only `transform`, `opacity` and `clip-path`, and respects `prefers-reduced-motion`. Content stays visible if JavaScript is off.
 - **Honesty:** no invented clients, testimonials or numbers. RSSA is labelled as a completed independent concept (not commissioned); QETC as completed client work. Degelsame Hotel is labelled as a completed independent concept.

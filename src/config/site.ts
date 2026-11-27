@@ -30,7 +30,7 @@ export type Project = {
     desktop: string;
     mobile?: string;
     alt: string;
-    /** Extra screenshots shown with the project (two work best). */
+    /** Extra screenshots. The first one is used as the back layer of the hero showcase. */
     details?: { src: string; alt: string; caption: string }[];
   };
 };

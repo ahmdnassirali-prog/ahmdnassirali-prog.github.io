@@ -27,14 +27,14 @@ export default function Services() {
               key={s.title}
               data-reveal
               style={{ ["--d" as string]: `${i * 70}ms` }}
-              className="group relative bg-ink-1 p-7 transition-colors duration-300 sm:p-9 [@media(hover:hover)]:hover:bg-ink-2"
+              className="group relative bg-ink-1 p-6 transition-colors duration-300 sm:p-9 [@media(hover:hover)]:hover:bg-ink-2"
             >
               <span
                 aria-hidden="true"
                 className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-blue transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-x-100"
               />
               <span className="font-mono text-xs text-blue">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="display mt-10 text-[2.2rem] leading-none sm:mt-16 sm:text-[2.6rem]">{s.title}</h3>
+              <h3 className="display mt-5 text-[2.2rem] leading-none sm:mt-16 sm:text-[2.6rem]">{s.title}</h3>
               <p className="mt-4 max-w-[34ch] leading-relaxed text-bone-2">{s.body}</p>
             </li>
           ))}

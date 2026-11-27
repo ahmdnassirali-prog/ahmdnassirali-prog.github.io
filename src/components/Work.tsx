@@ -69,7 +69,7 @@ function Feature({ project, index }: { project: Project; index: number }) {
 
       {/* full-bleed cover */}
       <div className="relative mx-[calc(50%-50vw)] border-y border-line">
-        <a href={url} {...ext} className="group relative block overflow-hidden bg-ink-2" aria-label={`${visit}: ${project.title} (opens in a new tab)`}>
+        <a href={url} {...ext} className="group relative block overflow-hidden bg-ink-2 lg:max-h-[min(72vh,44rem)]" aria-label={`${visit}: ${project.title} (opens in a new tab)`}>
           <div
             aria-hidden="true"
             className="absolute inset-0"
@@ -133,7 +133,7 @@ function Feature({ project, index }: { project: Project; index: number }) {
       </dl>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-12">
-        <p data-reveal className={`display text-[clamp(1.7rem,2.6vw,2.4rem)] leading-[1.15] text-bone lg:col-span-7 ${flip ? "lg:col-start-6" : ""}`}>
+        <p data-reveal className={`display text-[clamp(1.35rem,2.6vw,2.4rem)] leading-[1.15] text-bone lg:col-span-7 ${flip ? "lg:col-start-6" : ""}`}>
           {project.description}
         </p>
         <div data-reveal className={`lg:col-span-3 lg:self-end ${flip ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-10 lg:text-right"}`}>
@@ -144,34 +144,6 @@ function Feature({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      {/* details */}
-      {img.details && img.details.length > 0 && (
-        <div className="mt-20 grid gap-8 sm:grid-cols-12">
-          {img.details.slice(0, 2).map((d, i) => (
-            <figure
-              key={d.src}
-              className={
-                i === 0 ? `sm:col-span-7 ${flip ? "sm:order-2" : ""}` : `sm:col-span-5 sm:mt-28 ${flip ? "sm:order-1" : ""}`
-              }
-            >
-              <div data-curtain style={{ ["--d" as string]: `${i * 120}ms` }} className="overflow-hidden rounded-[12px] border border-line">
-                <Image
-                  src={d.src}
-                  alt={d.alt}
-                  width={1600}
-                  height={956}
-                  sizes={i === 0 ? "(min-width: 640px) 56vw, 92vw" : "(min-width: 640px) 40vw, 92vw"}
-                  className="block h-auto w-full"
-                />
-              </div>
-              <figcaption className="mt-4 flex gap-4 text-sm text-bone-3">
-                <span className="font-mono text-xs text-bone-2">{String(index).padStart(2, "0")}.{i + 1}</span>
-                {d.caption}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      )}
     </article>
   );
 }
@@ -191,7 +163,7 @@ export default function Work() {
 
         <ProjectIndex projects={site.projects} />
 
-        <div className="mt-[var(--section)] space-y-[var(--section)]">
+        <div className="mt-[clamp(4rem,8vw,7rem)] space-y-[clamp(5rem,9vw,8rem)]">
           {live.map((p, i) => (
             <Feature key={p.slug} project={p} index={i + 1} />
           ))}
