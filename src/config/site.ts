@@ -77,8 +77,7 @@ export const site = {
     /** Each string is one line. Wrap a word in *asterisks* to set it in blue italic. */
     greeting: ["Hello, I’m", "*Ahmednassir*."],
     role: "Web designer & developer",
-    intro:
-      "I design and build modern, high-quality websites that help businesses earn trust, communicate their value, and make a stronger impression online.",
+    intro: "I’m a digital experience designer. I design new websites and redesign outdated ones for businesses that want to stand out online.",
     locationLine: "Based in Somaliland · Working worldwide",
     /** Your portrait, shown exactly as supplied (no cut-out, no retouching). */
     photo: {
@@ -177,6 +176,33 @@ export const site = {
     },
   ],
 
+  /** Skills listed under About in the hero. */
+  skills: {
+    development: [
+      "Website design (UI/UX)",
+      "Mobile-first responsive builds",
+      "Next.js & React",
+      "TypeScript",
+      "Tailwind CSS",
+      "WhatsApp & enquiry form integration",
+    ],
+    seo: [
+      "On-page SEO (titles, descriptions, headings)",
+      "Technical SEO (sitemap, structured data)",
+      "Page speed optimisation",
+      "Google Search Console setup",
+      "Google Business Profile",
+      "Google Maps",
+    ],
+  },
+
+  /** "3 things every website needs" section. */
+  essentials: [
+    { title: "Fast loading", body: "Pages open quickly, even on mobile data." },
+    { title: "Modern design", body: "A clean, current look that earns trust at first glance." },
+    { title: "SEO optimised", body: "Built so customers can find you on Google." },
+  ],
+
   /** Packages shown in the Pricing section. Prices in USD. */
   pricing: {
     /** Name used in the pre-filled WhatsApp message ("Hi Ahmednassir, ..."). */
@@ -226,13 +252,12 @@ export const site = {
     statement:
       "I am a *digital experience* designer who designs and builds websites for businesses in Somaliland and around the world.",
     paragraphs: [
-      "You work with me directly, from the first conversation to launch day and after. The person who designs your website is the person who builds it, so nothing gets lost in a hand-off.",
-      "Local businesses get someone who understands their customers and how they browse. International clients get a remote partner who communicates clearly and keeps to agreed timelines.",
+      "Every site is fast, mobile-first and SEO-optimised, so customers find you on Google and reach you in one tap. You work with me directly, from the first idea to launch day.",
     ],
     facts: [
-      { label: "Based in", value: "Somaliland" },
+      { label: "Delivery", value: "7–14 days, depending on package" },
       { label: "Working with", value: "Local & international businesses" },
-      { label: "Built with", value: "Next.js, TypeScript, Tailwind CSS" },
+      { label: "Built with", value: "Next.js, React, TypeScript, Tailwind CSS, Vercel" },
     ],
   },
 
@@ -257,8 +282,8 @@ export const site = {
 
   contactSection: {
     /** Each string is one line. Wrap a word in *asterisks* to set it in blue italic. */
-    headline: ["Let’s Build", "Something *Great*", "Together."],
-    body: "Tell me about your business and what you need. Whether you are across town or across the world, the first conversation is free.",
+    headline: ["If They Can’t Find You", "Online, They’ll Find", "*Your Competitor*."],
+    body: "A professional website puts your business in front of customers searching on Google, day and night. Tell me what you need. The first conversation is free.",
   },
 };
 
