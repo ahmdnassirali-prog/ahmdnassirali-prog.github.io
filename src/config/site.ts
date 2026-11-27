@@ -80,12 +80,12 @@ export const site = {
     intro:
       "I design and build modern, high-quality websites that help businesses earn trust, communicate their value, and make a stronger impression online.",
     locationLine: "Based in Somaliland · Working worldwide",
-    /** Your portrait (a cut-out PNG/WebP in /public, transparent background). */
+    /** Your portrait, shown exactly as supplied (no cut-out, no retouching). */
     photo: {
-      src: "/ahmednassir.webp",
-      width: 1000,
-      height: 1218,
-      alt: "Ahmednassir Ali, web designer and developer, in a navy suit and tie.",
+      src: "/ahmednassir-portrait.webp",
+      width: 1121,
+      height: 1403,
+      alt: "Ahmednassir Ali, web designer and developer, in a navy suit and red patterned tie.",
     },
     /** Short tags floating around the portrait. Keep them true. */
     tags: ["Website design", "Development", "Redesigns", "Somali + English"],
