@@ -41,7 +41,7 @@ export const site = {
   /** Short form used in tight spaces (navigation, browser tab). */
   shortName: "Digital Experience Designer",
   /** Optional: your own name. Shown in About when set. */
-  ownerName: "",
+  ownerName: "Ahmednassir Ali",
   /** Where you are based. */
   location: "Somaliland",
   /** Live URL (SEO, sitemap, social cards). Set automatically on GitHub Pages; replace the fallback if you use your own domain. */
@@ -75,10 +75,20 @@ export const site = {
 
   hero: {
     /** Each string is one line. Wrap a word in *asterisks* to set it in blue italic. */
-    headline: ["Your Business", "Deserves a *Better*", "Website."],
+    greeting: ["Hello, I’m", "*Ahmednassir*."],
+    role: "Web designer & developer",
     intro:
       "I design and build modern, high-quality websites that help businesses earn trust, communicate their value, and make a stronger impression online.",
     locationLine: "Based in Somaliland · Working worldwide",
+    /** Your portrait (a cut-out PNG/WebP in /public, transparent background). */
+    photo: {
+      src: "/ahmednassir.webp",
+      width: 1000,
+      height: 1218,
+      alt: "Ahmednassir Ali, web designer and developer, in a navy suit and tie.",
+    },
+    /** Short tags floating around the portrait. Keep them true. */
+    tags: ["Website design", "Development", "Redesigns", "Somali + English"],
   },
 
   projects: [
@@ -138,36 +148,6 @@ export const site = {
             src: "/work/rssa-brand.webp",
             alt: "RSSA concept: brand moment set on shipping container doors with the line Your cargo. Our port.",
             caption: "A brand moment built from the container itself.",
-          },
-        ],
-      },
-    },
-    {
-      slug: "degelsame",
-      title: "Degelsame",
-      subtitle: "Degelsame Hotel",
-      summary: "A website concept for a hotel, coffee house and restaurant in Hargeisa.",
-      description:
-        "A five-page concept for a hotel in Goolada Hoose, Hargeisa: rooms, dining, gallery, about and contact. Guests can call or send an enquiry from every page, and Somali sits alongside English where it matters.",
-      kind: "concept",
-      status: "completed",
-      url: "https://ahmdnassirali-prog.github.io/degelsame-hotel/",
-      sector: "Hospitality",
-      scope: ["Art direction", "Website design", "Development", "Responsive build"],
-      images: {
-        desktop: "/work/degelsame-home.webp",
-        mobile: "/work/degelsame-mobile.webp",
-        alt: "Degelsame Hotel concept homepage: the name in large gold letters over photos of the hotel towers and reception.",
-        details: [
-          {
-            src: "/work/degelsame-rooms.webp",
-            alt: "Degelsame Hotel concept: the Rooms page, headed Rooms for a night, a week or a season, with the Deluxe Room.",
-            caption: "The Rooms page: Deluxe, VIP, Single and long-stay rates.",
-          },
-          {
-            src: "/work/degelsame-hall.webp",
-            alt: "Degelsame Hotel concept: the hall decorated in gold with Somaliland flags for national day.",
-            caption: "The hall, dressed for Somaliland’s national day.",
           },
         ],
       },
